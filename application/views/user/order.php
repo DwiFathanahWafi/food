@@ -9,8 +9,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Mie Yummy</title>
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+    <title>Order</title>
+
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png">
     <!-- Custom fonts for this template-->
     <link href="<?= base_url('assets/'); ?>vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -37,6 +38,7 @@
             </a>
             <!-- Divider -->
             <hr class="sidebar-divider">
+            <!-- Heading -->
             <!-- Heading -->
             <div class="sidebar-heading">
                 Interface
@@ -81,14 +83,6 @@
                     <i class="fas fa-fw fa-sign-out-alt"></i>
                     <span>Logout</span></a>
             </li>
-            <hr class="sidebar-divider">
-
-            <li class="nav-item">
-                <a class="nav-link" href="">
-                    <span style="font-size: 17px; ">About</span></a>
-            </li>
-
-            <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
             <!-- Sidebar Toggler (Sidebar) -->
@@ -97,7 +91,6 @@
             </div>
 
         </ul>
-        <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -117,30 +110,18 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-                        <div class="navbar">
-                            <ul class="nav navbar-nav navbar right">
-                                <li>
-                                    <?php
-                                    $order = 'Order : ' . $this->cart->total_items()
-                                    ?>
-                                    <i class="fas fa-fw fa-concierge-bell"></i>
-                                    <?= anchor('User/detail_order', $order)  ?>
-
-                                </li>
-                            </ul>
-                        </div>
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $user['name'] ?></span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $user['name']; ?></span>
                                 <img class="img-profile rounded-circle" src="<?= base_url('assets/img/') . $user['image']; ?>">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="<?= base_url('profile'); ?>">
+                                <a class="dropdown-item" href="<?= base_url('user/editp'); ?>">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
@@ -155,42 +136,51 @@
                     </ul>
 
                 </nav>
-                <!-- End of Topbar -->
-
-                <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <div class="row text-center  mt-3">
+                    <h4>Order List</h4>
+                    <table class="table table-bordered table-striped table-hover mt-3">
+                        <tr class="text-center">
+                            <th>No</th>
+                            <th>Nama Menu</th>
+                            <th>Jumlah</th>
+                            <th>Harga</th>
+                            <th>Total</th>
+                        </tr>
+                        <?php
+                        $no = 1;
+                        foreach ($this->cart->contents() as $item) : ?>
+                            <tr class="text-center">
+                                <td><?= $no++ ?></td>
+                                <td><?= $item['name'] ?></td>
+                                <td><?= $item['qty'] ?></td>
+                                <td>Rp. <?= number_format($item['price'], 0, ',', '.') ?></td>
+                                <td>Rp. <?= number_format($item['subtotal'], 0, ',', '.') ?></td>
 
-
-                        <div class="card mb-3">
-                            <div class="row no-gutters">
-                                <div class="col-md-5">
-                                    <img src="<?= base_url('assets/img/') . $user['image']; ?>" class="card-img">
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="card-body">
-                                        <h1 class="card-title mb-3 "><?= $user['name']  ?> </h1>
-                                        <p class="card-text">Selamat datang <?= $user['name']  ?>
-                                            hilangkan rasa lapar dan haus dengan pesan makanan atau minuman
-                                            melalui tombol dibawah atau pergi
-                                            ke halaman menu terimakasih
-                                            <a class="nav-link" href="<?= base_url('user/menu') ?>">
-                                                <button type="submit" class="btn btn-primary btn-sm mt-3">Menu</button>
-                                        </p>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- /.container-fluid -->
-
+                            </tr>
+                        <?php endforeach; ?>
+                        <tr>
+                            <td colspan="4"></td>
+                            <td class="text-center">Rp. <?= number_format($this->cart->total(), 0, ',', '.') ?></td>
+                        </tr>
+                    </table>
+                    <div align="right">
+                        <a href="<?= base_url('User/hapus_order') ?>">
+                            <div class="btn btn-sm btn-danger">Hapus Order</div>
+                        </a>
+                        <a href="<?= base_url('User/menu') ?>">
+                            <div class="btn btn-sm btn-primary">Lanjut Order</div>
+                        </a>
+                        <a href="<?= base_url('User/bayar') ?>">
+                            <div class="btn btn-sm btn-success">Bayar</div>
+                        </a>
                     </div>
-                    <!-- End of Main Content -->
 
-                    <!-- Footer -->
                 </div>
+
+                <!-- End of Main Content -->
+
             </div>
+            <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
@@ -228,17 +218,16 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="<?= base_url('assets/'); ?>vendor/jquery/jquery.min.js"></script>
-    <script src="<?= base_url('assets/'); ?>vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Bootstrap core JavaScript-->
+        <script src="<?= base_url('assets/'); ?>vendor/jquery/jquery.min.js"></script>
+        <script src="<?= base_url('assets/'); ?>vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="<?= base_url('assets/'); ?>vendor/jquery-easing/jquery.easing.min.js"></script>
+        <!-- Core plugin JavaScript-->
+        <script src="<?= base_url('assets/'); ?>vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="<?= base_url('assets/'); ?>js/sb-admin-2.min.js"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="<?= base_url('assets/'); ?>js/sb-admin-2.min.js"></script>
 
 </body>
 

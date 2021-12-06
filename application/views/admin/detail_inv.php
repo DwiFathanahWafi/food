@@ -9,8 +9,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Mie Yummy</title>
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+    <title>Detail Invoice</title>
+
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png">
     <!-- Custom fonts for this template-->
     <link href="<?= base_url('assets/'); ?>vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -33,47 +34,36 @@
                 <div class="sidebar-brand-icon rotate-n-20">
                     <i class="fab fa-hornbill"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Mie Yummy</div>
+                <div class="sidebar-brand-text mx-3">Mie Admin</div>
             </a>
             <!-- Divider -->
             <hr class="sidebar-divider">
             <!-- Heading -->
-            <div class="sidebar-heading">
-                Interface
-            </div>
-
-            <li class="nav-item">
-                <a class="nav-link" href="<?= base_url('user/index'); ?>">
-                    <i class="fas  fa-fw fa-home"></i>
-                    <span>Home</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<?= base_url('user/menu') ?>">
-                    <i class="fas fa-fw fa-list-ul"></i>
-                    <span>Menu</span></a>
-            </li>
-            <hr class="sidebar-divider">
             <!-- Heading -->
             <div class="sidebar-heading">
-                Sub Menu
+                Administrator
             </div>
-
+            <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="<?= base_url('user/makanan') ?>">
-                    <i class="fas fa-fw fa-food"></i>
-                    <span>Makanan</span></a>
+                <a class="nav-link" href="<?= base_url('admin/dashboard') ?>">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
             </li>
 
+
+
             <li class="nav-item">
-                <a class="nav-link" href="<?= base_url('user/minuman') ?>">
-                    <i class="fas fa-fw fa-bottle"></i>
-                    <span>Minuman</span></a>
+                <a class="nav-link" href="<?= base_url('admin/data_menu') ?>">
+                    <i class="fas fa-fw fa-database"></i>
+                    <span>Data Menu</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?= base_url('user/topping') ?>">
-                    <i class="fas fa-fw fa-bottle"></i>
-                    <span>Topping</span></a>
+                <a class="nav-link" href="<?= base_url('admin/invoice') ?>">
+                    <i class="fas  fa-fw fa-file-invoice"></i>
+                    <span>Invoices</span></a>
+
             </li>
+
             <hr class="sidebar-divider">
 
             <li class="nav-item">
@@ -81,14 +71,6 @@
                     <i class="fas fa-fw fa-sign-out-alt"></i>
                     <span>Logout</span></a>
             </li>
-            <hr class="sidebar-divider">
-
-            <li class="nav-item">
-                <a class="nav-link" href="">
-                    <span style="font-size: 17px; ">About</span></a>
-            </li>
-
-            <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
             <!-- Sidebar Toggler (Sidebar) -->
@@ -97,7 +79,6 @@
             </div>
 
         </ul>
-        <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -117,30 +98,18 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-                        <div class="navbar">
-                            <ul class="nav navbar-nav navbar right">
-                                <li>
-                                    <?php
-                                    $order = 'Order : ' . $this->cart->total_items()
-                                    ?>
-                                    <i class="fas fa-fw fa-concierge-bell"></i>
-                                    <?= anchor('User/detail_order', $order)  ?>
-
-                                </li>
-                            </ul>
-                        </div>
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $user['name'] ?></span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $user['name']; ?></span>
                                 <img class="img-profile rounded-circle" src="<?= base_url('assets/img/') . $user['image']; ?>">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="<?= base_url('profile'); ?>">
+                                <a class="dropdown-item" href="<?= base_url('user/editp'); ?>">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
@@ -155,42 +124,45 @@
                     </ul>
 
                 </nav>
-                <!-- End of Topbar -->
-
-                <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <div class="row text-center  mt-3">
+                    <h4>Detail Pesanan <div class="btn btn-sm btn-success">Invoice <?= $invoice->id ?></div>
+                    </h4>
+                    <table class="table table-bordered table-hover table-striped mt-3">
+                        <tr class="text-center">
+                            <th>ID MENU</th>
+                            <th>NAMA MENU</th>
+                            <th>JUMLAH PESANAN</th>
+                            <th>HARGA SATUAN</th>
+                            <th>SUB-TOTAL</th>
+                        </tr>
+                        <?php
+                        $total = 0;
+                        foreach ($pesanan as $psn) :
+                            $subtotal = $psn->jumlah * $psn->harga;
+                            $total += $subtotal; ?>
+                            <tr class="text-center">
+                                <td><?= $psn->id ?></td>
+                                <td><?= $psn->nama_menu ?></td>
+                                <td><?= $psn->jumlah ?></td>
+                                <td><?= number_format($psn->harga, 0, ',', '.') ?></td>
+                                <td><?= number_format($subtotal, 0, ',', '.') ?></td>
 
-
-                        <div class="card mb-3">
-                            <div class="row no-gutters">
-                                <div class="col-md-5">
-                                    <img src="<?= base_url('assets/img/') . $user['image']; ?>" class="card-img">
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="card-body">
-                                        <h1 class="card-title mb-3 "><?= $user['name']  ?> </h1>
-                                        <p class="card-text">Selamat datang <?= $user['name']  ?>
-                                            hilangkan rasa lapar dan haus dengan pesan makanan atau minuman
-                                            melalui tombol dibawah atau pergi
-                                            ke halaman menu terimakasih
-                                            <a class="nav-link" href="<?= base_url('user/menu') ?>">
-                                                <button type="submit" class="btn btn-primary btn-sm mt-3">Menu</button>
-                                        </p>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- /.container-fluid -->
-
-                    </div>
-                    <!-- End of Main Content -->
-
-                    <!-- Footer -->
+                            </tr>
+                        <?php endforeach; ?>
+                        <tr>
+                            <td colspan="4" align="right" class="text-center">TOTAL</td>
+                            <td align="right" class="text-center">Rp. <?= number_format($total, 0, ',', '.') ?></td>
+                        </tr>
+                    </table>
+                    <a href="<?= base_url('admin/invoice') ?>">
+                        <div class="btn btn-sm btn-primary">Kembali</div>
+                    </a>
                 </div>
+
+                <!-- End of Main Content -->
+
             </div>
+            <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
@@ -228,17 +200,16 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="<?= base_url('assets/'); ?>vendor/jquery/jquery.min.js"></script>
-    <script src="<?= base_url('assets/'); ?>vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Bootstrap core JavaScript-->
+        <script src="<?= base_url('assets/'); ?>vendor/jquery/jquery.min.js"></script>
+        <script src="<?= base_url('assets/'); ?>vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="<?= base_url('assets/'); ?>vendor/jquery-easing/jquery.easing.min.js"></script>
+        <!-- Core plugin JavaScript-->
+        <script src="<?= base_url('assets/'); ?>vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="<?= base_url('assets/'); ?>js/sb-admin-2.min.js"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="<?= base_url('assets/'); ?>js/sb-admin-2.min.js"></script>
 
 </body>
 

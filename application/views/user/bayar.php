@@ -9,8 +9,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Mie Yummy</title>
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+    <title>Pembayaran</title>
+
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png">
     <!-- Custom fonts for this template-->
     <link href="<?= base_url('assets/'); ?>vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -74,6 +75,7 @@
                     <i class="fas fa-fw fa-bottle"></i>
                     <span>Topping</span></a>
             </li>
+
             <hr class="sidebar-divider">
 
             <li class="nav-item">
@@ -87,7 +89,6 @@
                 <a class="nav-link" href="">
                     <span style="font-size: 17px; ">About</span></a>
             </li>
-
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -95,6 +96,24 @@
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <footer class="sticky-footer bg-auto">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Kel 6 2021</span>
+                    </div>
+                </div>
+            </footer>
 
         </ul>
         <!-- End of Sidebar -->
@@ -117,18 +136,6 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-                        <div class="navbar">
-                            <ul class="nav navbar-nav navbar right">
-                                <li>
-                                    <?php
-                                    $order = 'Order : ' . $this->cart->total_items()
-                                    ?>
-                                    <i class="fas fa-fw fa-concierge-bell"></i>
-                                    <?= anchor('User/detail_order', $order)  ?>
-
-                                </li>
-                            </ul>
-                        </div>
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -140,7 +147,7 @@
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="<?= base_url('profile'); ?>">
+                                <a class="dropdown-item" href="<?= base_url('user/editp'); ?>">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
@@ -159,71 +166,98 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <div class="row text-center  mt-3">
-
-
-                        <div class="card mb-3">
-                            <div class="row no-gutters">
-                                <div class="col-md-5">
-                                    <img src="<?= base_url('assets/img/') . $user['image']; ?>" class="card-img">
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8">
+                            <div class="btn btn-sm btn-success">
+                                <?php $grand_total = 0;
+                                if ($order = $this->cart->contents()) {
+                                    foreach ($order as $item) {
+                                        $grand_total = $grand_total + $item['subtotal'];
+                                    }
+                                    echo "<h3>Total Pesanan Anda: Rp. " . number_format($grand_total, 0, ',', '.');
+                                ?>
+                            </div><br><br>
+                            <h3>Input Alamat Rumah Anda</h3>
+                            <form method="post" action="<?= base_url('User/proses_pesan') ?>">
+                                <div class="form-group">
+                                    <label>Nama Lengkap</label>
+                                    <input type="text" name="nama" placeholder="Nama Lengkap Anda" class="form-control" value="<?= $user['name'] ?>">
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="card-body">
-                                        <h1 class="card-title mb-3 "><?= $user['name']  ?> </h1>
-                                        <p class="card-text">Selamat datang <?= $user['name']  ?>
-                                            hilangkan rasa lapar dan haus dengan pesan makanan atau minuman
-                                            melalui tombol dibawah atau pergi
-                                            ke halaman menu terimakasih
-                                            <a class="nav-link" href="<?= base_url('user/menu') ?>">
-                                                <button type="submit" class="btn btn-primary btn-sm mt-3">Menu</button>
-                                        </p>
-                                    </div>
-
+                                <div class="form-group">
+                                    <label>Alamat Lengkap</label>
+                                    <input type="text" name="alamat" placeholder="Alamat Lengkap Anda" class="form-control" value="<?= $user['address'] ?>">
                                 </div>
-                            </div>
+                                <div class="form-group">
+                                    <label>No. Telepon</label>
+                                    <input type="text" name="no_tlp" placeholder="Nomor Telepon Anda" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Jasa Pengiriman</label>
+                                    <select class="form-control">
+                                        <option>Grab</option>
+                                        <option>Gojek</option>
+                                        <option>ShopeeFood</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Metode Pembayaran</label>
+                                    <select class="form-control">
+                                        <option>Dana</option>
+                                        <option>Ovo</option>
+                                        <option>GoPay</option>
+                                        <option>ShopeePay</option>
+                                        <option>BCA - XXXXXXX</option>
+                                        <option>BRI - XXXXXXX</option>
+                                        <option>MANDIRI - XXXXXXX</option>
+                                        <option>Ginjal</option>
+
+                                    </select>
+                                </div>
+                                <a href="<?= base_url('User/detail_order') ?>">
+                                    <div class="btn btn-sm btn-danger mt-2">Batal</div>
+                                    <button type="submit" class="btn btn-sm btn-primary mt-2">Pesan</button>
+                            </form>
+                        <?php
+                                } else {
+                                    echo "<h4>Anda belum Memesan Apapaun";
+                                }
+                        ?>
                         </div>
 
-                        <!-- /.container-fluid -->
-
+                        <div class="col-md-2"></div>
                     </div>
-                    <!-- End of Main Content -->
 
-                    <!-- Footer -->
                 </div>
             </div>
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Kel 6 2021</span>
+
+
+
+        </div>
+        <!-- End of Footer -->
+
+        <!-- End of Content Wrapper -->
+
+        <!-- End of Page Wrapper -->
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+
+        <!-- Logout Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
                     </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
-
-            <!-- End of Content Wrapper -->
-
-            <!-- End of Page Wrapper -->
-
-            <!-- Scroll to Top Button-->
-            <a class="scroll-to-top rounded" href="#page-top">
-                <i class="fas fa-angle-up"></i>
-            </a>
-
-            <!-- Logout Modal-->
-            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">Yakin Mau Logout? Pesen Aja Belom.</div>
-                        <div class="modal-footer">
-                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                            <a class="btn btn-primary" href="<?= base_url('auth/logout'); ?>">Logout</a>
-                        </div>
+                    <div class="modal-body">Yakin Mau Logout? Pesen Aja Belom.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" href="<?= base_url('auth/logout'); ?>">Logout</a>
                     </div>
                 </div>
             </div>

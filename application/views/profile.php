@@ -140,7 +140,7 @@
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="<?= base_url('profile'); ?>">
+                                <a class="dropdown-item" href="<?= base_url('user/editp'); ?>">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
@@ -170,13 +170,8 @@
                                 <div class="col-md-4">
                                     <div class="card-body">
                                         <h1 class="card-title mb-3 "><?= $user['name']  ?> </h1>
-                                        <p class="card-text">Selamat datang <?= $user['name']  ?>
-                                            hilangkan rasa lapar dan haus dengan pesan makanan atau minuman
-                                            melalui tombol dibawah atau pergi
-                                            ke halaman menu terimakasih
-                                            <a class="nav-link" href="<?= base_url('user/menu') ?>">
-                                                <button type="submit" class="btn btn-primary btn-sm mt-3">Menu</button>
-                                        </p>
+                                        <p class="card-text"><?= $user['email']  ?></p>
+                                        <p class="card-text"><?= $user['name']  ?></p>
                                     </div>
 
                                 </div>

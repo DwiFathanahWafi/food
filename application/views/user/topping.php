@@ -9,8 +9,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Mie Yummy</title>
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+    <title>Sub Menu</title>
+
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png">
     <!-- Custom fonts for this template-->
     <link href="<?= base_url('assets/'); ?>vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -74,6 +75,9 @@
                     <i class="fas fa-fw fa-bottle"></i>
                     <span>Topping</span></a>
             </li>
+
+
+
             <hr class="sidebar-divider">
 
             <li class="nav-item">
@@ -84,7 +88,7 @@
             <hr class="sidebar-divider">
 
             <li class="nav-item">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="<?= base_url('user/about') ?>">
                     <span style="font-size: 17px; ">About</span></a>
             </li>
 
@@ -117,6 +121,7 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
+
                         <div class="navbar">
                             <ul class="nav navbar-nav navbar right">
                                 <li>
@@ -140,7 +145,7 @@
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="<?= base_url('profile'); ?>">
+                                <a class="dropdown-item" href="<?= base_url('user/editp'); ?>">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
@@ -160,37 +165,32 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <div class="row text-center  mt-3">
+                        <?php foreach ($topping as $tp) : ?>
 
-
-                        <div class="card mb-3">
-                            <div class="row no-gutters">
-                                <div class="col-md-5">
-                                    <img src="<?= base_url('assets/img/') . $user['image']; ?>" class="card-img">
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="card-body">
-                                        <h1 class="card-title mb-3 "><?= $user['name']  ?> </h1>
-                                        <p class="card-text">Selamat datang <?= $user['name']  ?>
-                                            hilangkan rasa lapar dan haus dengan pesan makanan atau minuman
-                                            melalui tombol dibawah atau pergi
-                                            ke halaman menu terimakasih
-                                            <a class="nav-link" href="<?= base_url('user/menu') ?>">
-                                                <button type="submit" class="btn btn-primary btn-sm mt-3">Menu</button>
-                                        </p>
-                                    </div>
+                            <div class="card ml-4 mb-4" style="width: 18rem;">
+                                <img src="<?= base_url('assets/img/') . $tp->gambar ?>" class="card-img-top" style="height: 15rem;" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title mb-3 "><?= $tp->nama_menu ?></h5>
+                                    <small><?= $tp->des ?></small><br>
+                                    <span class="badge badge-pill badge-success mb-3">Rp. <?= number_format($tp->harga, 0, ',', '.') ?></span><br>
+                                    <?= anchor('user/order/' . $tp->id, '<div class="btn btn-sm btn-primary">Pesan</div>') ?>
+                                    <?= anchor('user/detail/' . $tp->id, '<div class="btn btn-sm btn-success">Detail</div>') ?>
 
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- /.container-fluid -->
-
+                        <?php endforeach; ?>
                     </div>
-                    <!-- End of Main Content -->
 
-                    <!-- Footer -->
+
+
                 </div>
+                <!-- /.container-fluid -->
+
             </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
@@ -200,31 +200,31 @@
             </footer>
             <!-- End of Footer -->
 
-            <!-- End of Content Wrapper -->
+        </div>
+        <!-- End of Content Wrapper -->
 
-            <!-- End of Page Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
 
-            <!-- Scroll to Top Button-->
-            <a class="scroll-to-top rounded" href="#page-top">
-                <i class="fas fa-angle-up"></i>
-            </a>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
 
-            <!-- Logout Modal-->
-            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">Yakin Mau Logout? Pesen Aja Belom.</div>
-                        <div class="modal-footer">
-                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                            <a class="btn btn-primary" href="<?= base_url('auth/logout'); ?>">Logout</a>
-                        </div>
-                    </div>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Yakin Mau Logout? Pesen Aja Belom.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="<?= base_url('auth/logout'); ?>">Logout</a>
                 </div>
             </div>
         </div>

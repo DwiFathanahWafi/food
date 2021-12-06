@@ -9,9 +9,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Waroenk Bang Petot</title>
+    <title>Edit</title>
 
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png">
     <!-- Custom fonts for this template-->
     <link href="<?= base_url('assets/'); ?>vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -34,7 +34,7 @@
                 <div class="sidebar-brand-icon rotate-n-20">
                     <i class="fab fa-hornbill"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Waroenk bang petot</div>
+                <div class="sidebar-brand-text mx-3">Mie Admin</div>
             </a>
 
             <!-- Divider -->
@@ -46,38 +46,23 @@
             </div>
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="<?= base_url('admin/dashboard') ?>">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Interface
-            </div>
+
 
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-list-ul"></i>
-                    <span>Menu</span></a>
+                <a class="nav-link" href="<?= base_url('admin/data_menu') ?>">
+                    <i class="fas fa-fw fa-database"></i>
+                    <span>Data Menu</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas  fa-fw fa-home"></i>
-                    <span>Home</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-concierge-bell"></i>
-                    <span>Order</span></a>
-            </li>
+                <a class="nav-link" href="<?= base_url('admin/invoice') ?>">
+                    <i class="fas  fa-fw fa-file-invoice"></i>
+                    <span>Invoices</span></a>
 
-            <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-shopping-cart"></i>
-                    <span>Cart</span></a>
             </li>
 
             <hr class="sidebar-divider">
@@ -87,14 +72,6 @@
                     <i class="fas fa-fw fa-sign-out-alt"></i>
                     <span>Logout</span></a>
             </li>
-            <hr class="sidebar-divider">
-
-            <li class="nav-item">
-                <a class="nav-link" href="<?= base_url('user/index') ?>">
-                    <span style="font-size: 17px; ">About</span></a>
-            </li>
-
-            <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
             <!-- Sidebar Toggler (Sidebar) -->
@@ -121,32 +98,78 @@
 
 
 
-                    <!-- Begin Page Content -->
-                    <div class="container-fluid">
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
 
-                        <!-- Page Heading -->
-                        <h1 class="h3 mb-4 text-gray-800">Yang Penting Mah Usaha </h1>
-                        <p>Perut Kenyang Dompet Aman</p>
+                        <div class="topbar-divider d-none d-sm-block"></div>
 
-                    </div>
-                    <!-- /.container-fluid -->
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $user['name'] ?> </span>
+                                <img class="img-profile rounded-circle" src="<?= base_url('assets/img/') . $user['image']; ?>">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="<?= base_url('user/editp'); ?>">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profile
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="<?= base_url('auth/logout'); ?>" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <div class="container-fluid">
+
+                    <h3><i class="fas fa-edit"></i>Edit Data Menu</h3>
+                    <?php foreach ($menu as $mn) : ?>
+                        <form method="post" action="<?= base_url('admin/data_menu/update'); ?>">
+                            <div class="form-group">
+                                <label>Nama Menu</label>
+                                <input type="text" name="nama_menu" class="form-control" value="<?= $mn->nama_menu ?>">
+                            </div>
+                            <div class="form-group">
+                                <label>Deskripsi</label>
+                                <input type="hidden" name="id" class="form-control" value="<?= $mn->id ?>">
+                                <input type="text" name="des" class="form-control" value="<?= $mn->des ?>">
+                            </div>
+                            <div class="form-group">
+                                <label>Harga</label>
+                                <input type="text" name="harga" class="form-control" value="<?= $mn->harga ?>">
+                            </div>
+                            <div class="form-group">
+                                <label>Kategori</label>
+                                <input type="text" name="kat" class="form-control" value="<?= $mn->kat ?>">
+                            </div>
+                            <div class="form-group">
+                                <label>Stok</label>
+                                <input type="text" name="stok" class="form-control" value="<?= $mn->stok ?>">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-sm mt-3">Save</button>
+                        </form>
+
+                    <?php endforeach; ?>
+
+                </div>
+
 
             </div>
-            <!-- End of Main Content -->
 
-            <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Wapi IT 2021</span>
+                        <span>Copyright &copy; Kel 6 2021</span>
                     </div>
                 </div>
             </footer>
-            <!-- End of Footer -->
-
         </div>
-        <!-- End of Content Wrapper -->
-
     </div>
     <!-- End of Page Wrapper -->
 
@@ -172,6 +195,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     <!-- Bootstrap core JavaScript-->

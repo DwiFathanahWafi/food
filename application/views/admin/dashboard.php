@@ -9,8 +9,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Mie Yummy</title>
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+    <title>
+        Home
+    </title>
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png">
+
     <!-- Custom fonts for this template-->
     <link href="<?= base_url('assets/'); ?>vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -30,50 +33,39 @@
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon rotate-n-20">
+                <div class="sidebar-brand-icon">
                     <i class="fab fa-hornbill"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Mie Yummy</div>
+                <div class="sidebar-brand-text mx-3">Mie Admin</div>
             </a>
+
             <!-- Divider -->
-            <hr class="sidebar-divider">
+            <hr class="sidebar-divider ">
+
             <!-- Heading -->
             <div class="sidebar-heading">
-                Interface
+                Administrator
             </div>
-
+            <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="<?= base_url('user/index'); ?>">
-                    <i class="fas  fa-fw fa-home"></i>
-                    <span>Home</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<?= base_url('user/menu') ?>">
-                    <i class="fas fa-fw fa-list-ul"></i>
-                    <span>Menu</span></a>
-            </li>
-            <hr class="sidebar-divider">
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Sub Menu
-            </div>
-
-            <li class="nav-item">
-                <a class="nav-link" href="<?= base_url('user/makanan') ?>">
-                    <i class="fas fa-fw fa-food"></i>
-                    <span>Makanan</span></a>
+                <a class="nav-link" href="<?= base_url('admin/Dashboard') ?>">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
             </li>
 
+
+
             <li class="nav-item">
-                <a class="nav-link" href="<?= base_url('user/minuman') ?>">
-                    <i class="fas fa-fw fa-bottle"></i>
-                    <span>Minuman</span></a>
-            </li>
+                <a class="nav-link" href="<?= base_url('admin/data_menu') ?>">
+                    <i class="fas fa-fw fa-database"></i>
+                    <span>Data Menu</span></a>
+
             <li class="nav-item">
-                <a class="nav-link" href="<?= base_url('user/topping') ?>">
-                    <i class="fas fa-fw fa-bottle"></i>
-                    <span>Topping</span></a>
+                <a class="nav-link" href="<?= base_url('admin/invoice') ?>">
+                    <i class="fas fa-fw fa-file-invoice"></i>
+                    <span>invoices</span></a>
             </li>
+
             <hr class="sidebar-divider">
 
             <li class="nav-item">
@@ -81,14 +73,6 @@
                     <i class="fas fa-fw fa-sign-out-alt"></i>
                     <span>Logout</span></a>
             </li>
-            <hr class="sidebar-divider">
-
-            <li class="nav-item">
-                <a class="nav-link" href="">
-                    <span style="font-size: 17px; ">About</span></a>
-            </li>
-
-            <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
             <!-- Sidebar Toggler (Sidebar) -->
@@ -117,30 +101,18 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-                        <div class="navbar">
-                            <ul class="nav navbar-nav navbar right">
-                                <li>
-                                    <?php
-                                    $order = 'Order : ' . $this->cart->total_items()
-                                    ?>
-                                    <i class="fas fa-fw fa-concierge-bell"></i>
-                                    <?= anchor('User/detail_order', $order)  ?>
-
-                                </li>
-                            </ul>
-                        </div>
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $user['name'] ?></span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $user['name'] ?> </span>
                                 <img class="img-profile rounded-circle" src="<?= base_url('assets/img/') . $user['image']; ?>">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="<?= base_url('profile'); ?>">
+                                <a class="dropdown-item" href="<?= base_url('user/editp'); ?>">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
@@ -155,9 +127,6 @@
                     </ul>
 
                 </nav>
-                <!-- End of Topbar -->
-
-                <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <div class="row text-center  mt-3">
 
@@ -170,13 +139,15 @@
                                 <div class="col-md-4">
                                     <div class="card-body">
                                         <h1 class="card-title mb-3 "><?= $user['name']  ?> </h1>
-                                        <p class="card-text">Selamat datang <?= $user['name']  ?>
-                                            hilangkan rasa lapar dan haus dengan pesan makanan atau minuman
-                                            melalui tombol dibawah atau pergi
-                                            ke halaman menu terimakasih
-                                            <a class="nav-link" href="<?= base_url('user/menu') ?>">
-                                                <button type="submit" class="btn btn-primary btn-sm mt-3">Menu</button>
+                                        <p class="card-text">Selamat datang admin <?= $user['name']  ?> silahkan
+                                            update menu atau cek pesanan
                                         </p>
+                                        <a href="<?= base_url('admin/invoice') ?>">
+                                            <div class="btn btn-primary btn-sm ">Cek Pesanan</div>
+                                        </a>
+                                        <a href="<?= base_url('admin/data_menu') ?>">
+                                            <div class="btn btn-primary btn-sm ">Update Menu</div>
+                                        </a>
                                     </div>
 
                                 </div>
@@ -186,9 +157,7 @@
                         <!-- /.container-fluid -->
 
                     </div>
-                    <!-- End of Main Content -->
 
-                    <!-- Footer -->
                 </div>
             </div>
             <footer class="sticky-footer bg-white">
@@ -198,10 +167,6 @@
                     </div>
                 </div>
             </footer>
-            <!-- End of Footer -->
-
-            <!-- End of Content Wrapper -->
-
             <!-- End of Page Wrapper -->
 
             <!-- Scroll to Top Button-->
@@ -219,7 +184,7 @@
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
-                        <div class="modal-body">Yakin Mau Logout? Pesen Aja Belom.</div>
+                        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                         <div class="modal-footer">
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                             <a class="btn btn-primary" href="<?= base_url('auth/logout'); ?>">Logout</a>
@@ -228,17 +193,16 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="<?= base_url('assets/'); ?>vendor/jquery/jquery.min.js"></script>
-    <script src="<?= base_url('assets/'); ?>vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Bootstrap core JavaScript-->
+        <script src="<?= base_url('assets/'); ?>vendor/jquery/jquery.min.js"></script>
+        <script src="<?= base_url('assets/'); ?>vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="<?= base_url('assets/'); ?>vendor/jquery-easing/jquery.easing.min.js"></script>
+        <!-- Core plugin JavaScript-->
+        <script src="<?= base_url('assets/'); ?>vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="<?= base_url('assets/'); ?>js/sb-admin-2.min.js"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="<?= base_url('assets/'); ?>js/sb-admin-2.min.js"></script>
 
 </body>
 

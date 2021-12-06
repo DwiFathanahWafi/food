@@ -7,7 +7,7 @@
                 <div class="col-lg">
                     <div class="p-5">
                         <div class="text-center">
-                            <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                            <h1 class="h4 text-gray-900 mb-4">Create an Account</h1>
                         </div>
                         <form class="user" method="post" action="<?= base_url('auth/registration'); ?>">
                             <div class="form-group">
@@ -20,7 +20,8 @@
                                 <?= form_error('email', '<small class="text-danger pl-3">', '</small>'); ?>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control form-control-user" id="address" name="address" placeholder="Address...">
+                                <input type="text" class="form-control form-control-user" id="address" name="address" placeholder="Your Address" value="<?= set_value('address'); ?>">
+                                <?= form_error('address', '<small class="text-danger pl-3">', '</small>'); ?>
                             </div>
                             <div class="form-group">
                                 <input type="password" class="form-control form-control-user" id="password1" name="password1" placeholder="Password">
@@ -33,9 +34,7 @@
                             </button>
                         </form>
                         <hr>
-                        <div class="text-center">
-                            <a class="small" href="forgot-password.html">Forgot Password?</a>
-                        </div>
+
                         <div class="text-center">
                             <a class="small" href="<?= base_url('auth'); ?>">Already have an account? Login!</a>
                         </div>
